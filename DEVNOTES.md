@@ -1,12 +1,14 @@
 # Developer Notes
 
-This file contains my personal notes, math explanations, design decisions. Contributions and suggestions are welcome.
+This file serves as documentation. Since this is my first C++ project, feedback is especially appreciated.
 
 ## Dependencies
 
 - GNU C++ compiler: `g++` (C++17 standard)
 
 - GNU build tool: `make`
+
+- SDL2 development library: `libsdl2-dev` (Linux)
 
 ## Installation
 
@@ -19,7 +21,7 @@ This file contains my personal notes, math explanations, design decisions. Contr
     cd frac2d
     ```
 
-3. Build and run the project:
+3. Build and run the app:
 
     ```bash
     make
