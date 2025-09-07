@@ -1,3 +1,3 @@
 #pragma once
 
-extern const int MAX_ITER;
+bool inSet(double x, double y);

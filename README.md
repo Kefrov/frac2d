@@ -10,7 +10,7 @@ nil.
 
 ## Previews
 
-nil.
+![screenshot](https://github.com/user-attachments/assets/165c274c-7345-49c6-973b-258fc8ff7841)
 
 ## Download
 

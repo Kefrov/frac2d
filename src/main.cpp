@@ -37,7 +37,7 @@ int main() {
             }
         }
 
-        // Render fractal here
+        renderMandelbrot(renderer);
         
         SDL_RenderPresent(renderer);
     }
