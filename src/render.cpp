@@ -2,8 +2,8 @@
 #include "render.hpp"
 #include "fractal.hpp"
 
-const int WIN_WIDTH = 900;
-const int WIN_HEIGHT = 900;
+const int WIN_WIDTH = 1000;
+const int WIN_HEIGHT = 1000;
 
 const double BOUND_X[2] = {-2.0, 1.0};
 const double BOUND_Y[2] = {-1.5, 1.5};
@@ -42,15 +42,14 @@ void cleanup(SDL_Window* window, SDL_Renderer* renderer) {
 void renderMandelbrot(SDL_Renderer* renderer) {
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     SDL_RenderClear(renderer);
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
     double pointX = BOUND_X[0];
     double pointY = BOUND_Y[1];
     for (int i = 0; i < WIN_HEIGHT; i++) {
         for (int j = 0; j < WIN_WIDTH; j++) {
-            if (inSet(pointX, pointY)) {
-                SDL_RenderDrawPoint(renderer, j, i);
-            }
+            SDL_Color color = getColor(pointX, pointY);
+            SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+            SDL_RenderDrawPoint(renderer, j, i);
 
             pointX += STEP;
         }

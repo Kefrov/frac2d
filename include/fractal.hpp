@@ -1,3 +1,4 @@
 #pragma once
+#include <SDL.h>
 
-bool inSet(double x, double y);
+SDL_Color getColor(double x, double y);

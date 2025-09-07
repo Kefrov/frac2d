@@ -10,7 +10,7 @@ nil.
 
 ## Previews
 
-![screenshot](https://github.com/user-attachments/assets/165c274c-7345-49c6-973b-258fc8ff7841)
+![screenshot](https://github.com/user-attachments/assets/43acc798-ebcd-4696-b734-d3f572722388)
 
 ## Download
 
