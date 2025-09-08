@@ -17,9 +17,8 @@ SDL_Color getColor(double x, double y) {
 
     for (int i = 0; i < MAX_ITER; i++) {
         z = z * z + c;
-        if (std::abs(z) > 2.0) {
+        if (std::abs(z) > 2.0)
             return calcColor(i);
-        }
     }
     return {0, 0, 0, 255};
 }

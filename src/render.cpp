@@ -1,4 +1,6 @@
 #include <iostream>
+#include <string>
+#include <vector>
 #include "render.hpp"
 #include "fractal.hpp"
 
@@ -27,11 +29,13 @@ SDL_Renderer* createRenderer(SDL_Window* window) {
     SDL_Renderer* renderer = SDL_CreateRenderer(
         window, 
         -1,
-        SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
+        0
     );
-    if (!renderer) std::cerr << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
+    if (!renderer)
+        std::cerr << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
     return renderer;
 }
+
 
 void cleanup(SDL_Window* window, SDL_Renderer* renderer) {
     SDL_DestroyRenderer(renderer);
@@ -57,4 +61,48 @@ void renderMandelbrot(SDL_Renderer* renderer) {
         pointX = BOUND_X[0];
         pointY -= STEP;
     }
+}
+
+// ! This will be removed eventually, for now it's for testing.
+void saveScreenshotBMP(const std::string& path, int width, int height, std::vector<double> bx, std::vector<double> by) {
+    SDL_Surface* surface = SDL_CreateRGBSurfaceWithFormat(
+        0, width, height, 32, SDL_PIXELFORMAT_RGBA32);
+    if (!surface) {
+        SDL_Log("Failed to create surface: %s", SDL_GetError());
+        return;
+    }
+
+    Uint32* pixels = (Uint32*)surface->pixels;
+
+    int last_percentage = -1;
+    double pointX = bx[0];
+    double pointY = by[1];
+    const double NSTEP = (bx[1] - bx[0]) / width;
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            SDL_Color color = getColor(pointX, pointY);
+            Uint32 mapped = SDL_MapRGBA(surface->format, color.r, color.g, color.b, color.a);
+            pixels[i * surface->w + j] = mapped;
+
+            pointX += NSTEP;
+
+            int percentage = 100.0 * (i * width + j) / (width * height);
+            if (percentage > last_percentage) {
+                std::cout << "\rRendering screenshot: " << percentage << "%" << std::flush;   
+                last_percentage = percentage;
+            }
+        }
+        
+        pointX = bx[0];
+        pointY -= NSTEP;
+    }
+    std::cout << std::endl;
+
+    if (SDL_SaveBMP(surface, path.c_str()) != 0) {
+        SDL_Log("Failed to save BMP: %s", SDL_GetError());
+    }
+
+    std::cout << "Screenshot saved successfully." << std::endl;
+
+    SDL_FreeSurface(surface);
 }
